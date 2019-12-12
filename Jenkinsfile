@@ -20,13 +20,12 @@ pipeline {
             }
         }
         stage('Deploy for production') {
-            when {
-                branch 'production'  
-            }
             steps {
-                sh '/var/lib/jenkins/scripts/deploy.sh'
-                sh '/var/lib/jenkins/scripts/deploy2.sh'
-
+                script{
+            branch = "${env.BRANCH_NAME}" 
+                sh (script:"/var/lib/jenkins/scripts/./deploy-test-web ${env.BRANCH_NAME}")
+                }
+      
             }
         }
     }
